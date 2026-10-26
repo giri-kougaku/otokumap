@@ -40,5 +40,6 @@ jobs:
             echo "No store changes this month."
           else
             git commit -m "chore: rebuild store index $(date -u +'%Y-%m-%d')"
+            git pull --rebase origin main
             git push
           fi
