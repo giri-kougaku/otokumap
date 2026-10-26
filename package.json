@@ -1,0 +1,16 @@
+{
+  "name": "sotsugyo",
+  "version": "1.0.0",
+  "description": "A bilingual (English / 日本語) supermarket deal finder for Japan. Shoppers can browse deals **without an account** and choose how to shop:",
+  "main": "index.js",
+  "scripts": {
+    "build:stores": "node scripts/build-stores.mjs",
+    "build:stores:kanto": "node scripts/build-stores.mjs --regions=kanto",
+    "fetch:flyers": "node scripts/fetch-flyers.mjs",
+    "validate": "node scripts/validate.mjs",
+    "serve": "python -m http.server 8000",
+    "test": "node scripts/validate.mjs"
+  },
+  "keywords": [],
+  "type": "commonjs"
+}

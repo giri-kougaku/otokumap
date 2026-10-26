@@ -1,0 +1,4 @@
+{
+  "_comment": "Manual flyer entries and corrections. Add objects with the same shape as data/flyers.json. Entries here are merged after automatic sources and can override an automatic entry by using the same id.",
+  "flyers": []
+}

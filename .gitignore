@@ -1,0 +1,8 @@
+node_modules/
+.DS_Store
+Thumbs.db
+
+# Local build artifacts / resumable checkpoints
+data/stores.json.checkpoint.json
+data/stores.tokyo.json
+*.log

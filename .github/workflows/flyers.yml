@@ -1,0 +1,47 @@
+name: Refresh flyers
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: flyers
+  cancel-in-progress: true
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Refresh official flyer links
+        env:
+          LIFE_MAX_STORES: '0'
+          LIFE_CONCURRENCY: '3'
+        run: node scripts/fetch-flyers.mjs
+
+      - name: Validate generated data
+        run: node scripts/validate.mjs
+
+      - name: Commit changes
+        run: |
+          git config user.name "OtokuMap Bot"
+          git config user.email "otokumap-bot@users.noreply.github.com"
+          git add data/flyers.json
+          if git diff --staged --quiet; then
+            echo "No flyer changes today."
+          else
+            git commit -m "chore: refresh flyers $(date -u +'%Y-%m-%d %H:%M UTC')"
+            git push
+          fi
