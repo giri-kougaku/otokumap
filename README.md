@@ -14,6 +14,9 @@ The demo deals and prices are still sample data. The store index and flyer links
 
 Everything is plain HTML, CSS and JavaScript on GitHub Pages — **no runtime backend, no paid APIs, no paid hosting**.
 
+**Live site:** <https://giri-kougaku.github.io/otokumap/>  
+**Repository:** <https://github.com/giri-kougaku/otokumap>
+
 ---
 
 ## Quick start
@@ -230,7 +233,7 @@ The workflows use the built-in `GITHUB_TOKEN`; no secrets are required. GitHub m
 
 1. Create a **public** GitHub repository and push this folder.
 2. Go to **Settings → Pages** and set the source to **Deploy from a branch** → `main` → `/ (root)`.
-3. Visit `https://<user>.github.io/<repo>/`.
+3. Visit `https://giri-kougaku.github.io/otokumap/`.
 4. Add that URL to the Google Maps key's **Website restrictions**, then trigger the workflows manually once.
 
 No server, database, paid API or paid hosting is required.
@@ -306,7 +309,7 @@ window.OTOKU_CONFIG = {
 1. **Application restrictions → Websites**
    - `http://localhost:8000/*`
    - `http://127.0.0.1:8000/*`
-   - `https://<user>.github.io/<repo>/*`
+   - `https://giri-kougaku.github.io/otokumap/*`
 2. **API restrictions** — allow only **Maps JavaScript API** and, if you keep the fallback, **Places API (New)**.
 3. Set a daily quota / budget alert in Google Cloud.
 
