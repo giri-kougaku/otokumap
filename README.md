@@ -17,6 +17,18 @@ Everything is plain HTML, CSS and JavaScript on GitHub Pages — **no runtime ba
 **Live site:** <https://giri-kougaku.github.io/otokumap/>  
 **Repository:** <https://github.com/giri-kougaku/otokumap>
 
+## Demo video
+
+[![OtokuMap demo poster](demo/otokumap-poster.jpg)](demo/otokumap-demo-90s.mp4)
+
+A **90-second, 1920 × 1080** walkthrough with English captions and no voiceover. It shows the live map, real OpenStreetMap store index, official flyer dialog, shopping modes, filters and the Japanese interface.
+
+- **File:** [`demo/otokumap-demo-90s.mp4`](demo/otokumap-demo-90s.mp4) (H.264, 30 fps, 90.0 s, no audio)
+- **Recording snapshot:** 19,754 stores · 896 official flyer links · 47 prefectures
+- **Transparency:** store locations and flyer links are real; **deal prices are sample data**.
+
+See [`demo/README.md`](demo/README.md) for the scene list, data notes and recording instructions.
+
 ---
 
 ## Quick start
@@ -79,7 +91,7 @@ The login page has one-click buttons that fill in these details. You can add mor
 - **Nearby supermarkets list** with real store names, addresses, distance and a Google Maps directions link.
 - **Flyer chips** on nearby stores and deal cards. A store-level match opens the official store flyer page. Regional or chain-level fallbacks are clearly labelled.
 - **Flyer dialog** with validity dates, source, a branded preview and an “Open official flyer” link. Flyer images stay on the retailer's site.
-- **Coverage count** under the nearby heading, e.g. `272 of 1035 stores have a flyer link`.
+- **Coverage count** under the nearby heading, e.g. `293 of 1035 stores have a flyer link`.
 - Fully responsive down to 320 px, keyboard focus styles, and `prefers-reduced-motion` support.
 
 ### Shop side
@@ -269,6 +281,7 @@ scripts/lib/normalize.mjs   Chain aliases, name/address normalization
 data/stores.json            Generated store index
 data/flyers.json            Generated flyer links
 data/flyer-overrides.json   Manual flyer corrections
+demo/                       90-second demo video, poster and recording source
 ```
 
 ---
