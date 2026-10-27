@@ -230,7 +230,7 @@ Checks both JSON files for required fields, valid URLs, valid dates, coordinate 
 | `.github/workflows/stores.yml` | Monthly + manual | Rebuilds `data/stores.json` from OpenStreetMap, validates, commits. |
 | `.github/workflows/validate.yml` | Push / PR | Runs the validator. |
 
-The workflows use the built-in `GITHUB_TOKEN`; no secrets are required. GitHub may pause scheduled workflows after 60 days without repository activity — the fresh `generatedAt` timestamp on each commit keeps the data current and the repository active.
+The workflows use the built-in `GITHUB_TOKEN`; no secrets are required. The monthly store rebuild uses `--merge-existing`, so a transient Overpass failure cannot remove stores that are already in the index. GitHub may pause scheduled workflows after 60 days without repository activity — the fresh `generatedAt` timestamp on each commit keeps the data current and the repository active.
 
 ### Publishing on GitHub Pages
 
