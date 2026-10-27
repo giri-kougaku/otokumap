@@ -1,7 +1,7 @@
 {
-  "name": "sotsugyo",
+  "name": "otokumap",
   "version": "1.0.0",
-  "description": "A bilingual (English / 日本語) supermarket deal finder for Japan. Shoppers can browse deals **without an account** and choose how to shop:",
+  "description": "A bilingual Japanese supermarket deal finder with real OpenStreetMap stores and official retailer flyer links.",
   "main": "index.js",
   "scripts": {
     "build:stores": "node scripts/build-stores.mjs",
