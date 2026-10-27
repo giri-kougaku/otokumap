@@ -123,7 +123,10 @@ node scripts/build-stores.mjs --all-prefectures --out=data/stores.json --resume
 # Re-query specific prefectures even if the checkpoint says they finished
 node scripts/build-stores.mjs --prefectures=千葉県,静岡県 --out=data/stores.json --resume --force
 
-# CI mode: fail instead of committing a partial index when any area fails
+# CI mode: keep the previous stores for any area that Overpass cannot answer
+node scripts/build-stores.mjs --all-prefectures --out=data/stores.json --merge-existing
+
+# Strict mode: fail instead of committing if any area fails
 node scripts/build-stores.mjs --all-prefectures --out=data/stores.json --strict
 ```
 

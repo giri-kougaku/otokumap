@@ -10,6 +10,7 @@
  *   node scripts/build-stores.mjs --regions=kanto
  *   node scripts/build-stores.mjs --bbox=35.60,139.60,35.80,139.90 --out=data/stores.tokyo.json
  *   node scripts/build-stores.mjs --prefectures=千葉県,静岡県 --resume --force
+ *   node scripts/build-stores.mjs --all-prefectures --out=data/stores.json --merge-existing
  *   node scripts/build-stores.mjs --all-prefectures --out=data/stores.json --strict
  */
 
@@ -180,6 +181,7 @@ async function main() {
   const resume = hasFlag('resume');
   const force = hasFlag('force');
   const strict = hasFlag('strict');
+  const mergeExisting = hasFlag('merge-existing');
   const limit = Number(arg('limit', '0')) || 0;
   const log = (msg) => console.error(msg);
 
@@ -209,6 +211,7 @@ async function main() {
   const stores = [];
   const seen = new Set();
   const regionStats = [];
+  const existingStats = [];
   const completed = new Set();
 
   if (resume) {
@@ -226,6 +229,23 @@ async function main() {
       log(`Resumed checkpoint: ${stores.length} stores, ${completed.size} completed areas`);
     } catch (err) {
       if (err.code !== 'ENOENT') log(`Could not read checkpoint: ${err.message}`);
+    }
+  }
+
+  if (mergeExisting) {
+    try {
+      const previous = JSON.parse(await fs.readFile(outPath, 'utf8'));
+      let merged = 0;
+      for (const store of previous.stores || []) {
+        if (!store || !store.id || seen.has(store.id)) continue;
+        seen.add(store.id);
+        stores.push(store);
+        merged++;
+      }
+      if (Array.isArray(previous.regions)) existingStats.push(...previous.regions);
+      log(`Merged existing index: ${merged} stores, ${existingStats.length} area stats`);
+    } catch (err) {
+      if (err.code !== 'ENOENT') throw err;
     }
   }
 
@@ -269,7 +289,16 @@ async function main() {
 
   if (!stores.length) throw new Error('No supermarkets were collected; refusing to overwrite the store index.');
 
-  const failures = regionStats.filter((r) => r.error);
+  const jobIds = new Set(jobs.map((j) => j.id));
+  const succeeded = regionStats.filter((r) => jobIds.has(r.id) && !r.error).length;
+  if (mergeExisting && succeeded === 0) {
+    throw new Error('All requested areas failed; keeping the existing store index.');
+  }
+
+  const mergedStatsById = new Map(existingStats.map((r) => [r.id, r]));
+  for (const r of regionStats) mergedStatsById.set(r.id, r);
+  const mergedRegionStats = [...mergedStatsById.values()];
+  const failures = mergedRegionStats.filter((r) => jobIds.has(r.id) && r.error);
   if (strict && failures.length) {
     throw new Error(
       `Strict mode: ${failures.length} area(s) failed (${failures.map((r) => r.name).join(', ')}). ` +
@@ -286,7 +315,7 @@ async function main() {
     license: 'OpenStreetMap contributors, ODbL 1.0',
     licenseUrl: 'https://www.openstreetmap.org/copyright',
     count: finalStores.length,
-    regions: regionStats,
+    regions: mergedRegionStats,
     stores: finalStores
   };
 

@@ -26,7 +26,7 @@ jobs:
           node-version: '24'
 
       - name: Build store index from OpenStreetMap
-        run: node scripts/build-stores.mjs --all-prefectures --out=data/stores.json --strict
+        run: node scripts/build-stores.mjs --all-prefectures --out=data/stores.json --merge-existing
 
       - name: Validate generated data
         run: node scripts/validate.mjs
